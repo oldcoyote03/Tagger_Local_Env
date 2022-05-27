@@ -6,5 +6,5 @@ RUN apt-get -y install git
 WORKDIR /tmp
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-#CMD [ "python", "./app.py"]
+#CMD [ "python", "./api.py"]
 CMD [ "sleep", "infinity" ]
