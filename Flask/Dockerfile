@@ -6,5 +6,8 @@ RUN apt-get -y install git
 WORKDIR /tmp
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-#CMD [ "python", "./api.py"]
-CMD [ "sleep", "infinity" ]
+WORKDIR /
+RUN git clone https://github.com/oldcoyote03/Tagger_App.git app
+WORKDIR /app
+RUN git checkout "develop"
+CMD [ "python", "./api.py"]
