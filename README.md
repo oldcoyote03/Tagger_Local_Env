@@ -1,17 +1,23 @@
 # Tagger_Local_Env
 
 Build the image
+Note: Image will rebuild if app 'develop' branch changes. Ref: [How to prevent Dockerfile caching git clone](https://stackoverflow.com/questions/36996046/how-to-prevent-dockerfile-caching-git-clone)
 `docker build -t tagger-api:vX .`
 
 Run container from docker compose
 `docker-compose up`
 
-Tag and push the image to docker hub
+Tag the image
 ```
 docker tag tagger-api:vX oldcoyote03/tagger-api:vX
 docker tag tagger-api:vX oldcoyote03/tagger-api:latest
-docker push --all-tags oldcoyote03/tagger-api
 ```
+
+Push the image to docker hub
+`docker push oldcoyote03/tagger-api:vX`
+
+Push all tags to docker hub
+`docker push --all-tags oldcoyote03/tagger-api`
 
 NOTE: On MacOS, [AirPlay uses port 5000 and 7000](https://developer.apple.com/forums/thread/682332)
 

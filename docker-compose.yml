@@ -6,4 +6,44 @@ services:
     container_name: flask-api
     ports:
       - 5000:5000
-    image: oldcoyote03/tagger-api:v0.2
+    image: oldcoyote03/tagger-api:v0.3
+    depends_on:
+      - haproxy
+
+  roach1:
+    container_name: roach1
+    image: cockroachdb/cockroach:v21.2.9
+    command: start --insecure --join=roach1,roach2,roach3
+
+  roach2:
+    container_name: roach2
+    image: cockroachdb/cockroach:v21.2.9
+    command: start --insecure --join=roach1,roach2,roach3
+
+  roach3:
+    container_name: roach3
+    image: cockroachdb/cockroach:v21.2.9
+    command: start --insecure --join=roach1,roach2,roach3
+
+  db-init:
+    container_name: db-init
+    image: docker:20.10.12
+    volumes:
+      - ./mounts/setup_db.sh:/tmp/setup_db.sh
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: "/bin/sh"
+    command: "/tmp/setup_db.sh"
+  
+  haproxy:
+    container_name: haproxy
+    image: haproxytech/haproxy-debian:2.5.7
+    depends_on:
+      - roach1
+      - roach2
+      - roach3
+    volumes:
+      - ./mounts/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - 26257:26257
+      - 8080:8080
+      - 8404:8404
