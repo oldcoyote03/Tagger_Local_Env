@@ -9,10 +9,13 @@ services:
     image: oldcoyote03/tagger-api:v0.3
     depends_on:
       - haproxy
+    command: sleep infinity
 
   roach1:
     container_name: roach1
     image: cockroachdb/cockroach:v21.2.9
+    volumes:
+      - ./mounts/schema.sql:/tmp/schema.sql
     command: start --insecure --join=roach1,roach2,roach3
 
   roach2:
