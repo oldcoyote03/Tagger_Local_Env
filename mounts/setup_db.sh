@@ -31,7 +31,6 @@ apk add --no-cache curl
 echo "Wait for curl to install"
 sleep 5
 
-#curl -H "Content-Type: application/json" -X GET http://flask-api:5000/hello
 curl -H "Content-Type: application/json" \
     -X GET http://flask-api:5000/hello
 sleep 5
