@@ -7,8 +7,8 @@ RUN python -m pip install --upgrade pip
 ENV SQLALCHEMY_DATABASE_URI=cockroachdb://root@haproxy:26257/tagger_db?sslmode=disable
 WORKDIR /
 ADD https://api.github.com/repos/oldcoyote03/Tagger_App/git/refs/heads/develop version.json
-RUN git clone https://github.com/oldcoyote03/Tagger_App.git app
-WORKDIR /app
+RUN git clone https://github.com/oldcoyote03/Tagger_App.git tagger_api
+WORKDIR /tagger_api
 RUN git checkout "develop"
 RUN pip install -r requirements.txt
-CMD [ "python", "./api.py"]
+CMD [ "python", "./run.py"]
