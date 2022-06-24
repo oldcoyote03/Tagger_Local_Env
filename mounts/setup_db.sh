@@ -1,40 +1,41 @@
 #!/bin/sh
+apk add --no-cache curl
+echo "curl installed"
+
 echo "Wait for services to initialize"
-sleep 10
+sleep 7
 
 docker ps
 docker exec roach1 ./cockroach init --insecure
+docker exec -d flask-api apt-get -y install nano net-tools
 
+echo "Services initialized"
 echo "Wait for DB cluster to initialize"
-sleep 10
+sleep 4
 
 docker exec roach1 ./cockroach sql --insecure --file /tmp/schema.sql
 
-echo "Wait for DB schema to initialize"
+echo "DB schema initialized"
 #sleep infinity
-sleep 5
+sleep 2
 
-#apt-get -y install net-tools
+#docker exec -it flask-api /bin/bash
 #netstat -tulnp | grep :5000
 #kill 
 
-#docker exec -it flask-api /bin/bash
-#apt-get -y install nano
-docker exec -d flask-api python /app/api.py
-
-echo "Wait for API to deploy"
-sleep 5
-
 #docker exec -it db-init /bin/sh
-apk add --no-cache curl
+#docker exec flask-api python /tagger_api/run.py
+docker exec -d flask-api python /tagger_api/run.py
+sleep 2
+echo "API deployed"
 
-echo "Wait for curl to install"
-sleep 5
 
-#curl -H "Content-Type: application/json" -X GET http://flask-api:5000/hello
+sleep 2
+
+#curl -H "Content-Type: application/json" -X GET http://flask-api:5000/bookmarks
 curl -H "Content-Type: application/json" \
-    -X GET http://flask-api:5000/hello
-sleep 5
+    -X GET http://flask-api:5000/bookmarks
+sleep 2
 
 echo "Setup complete"
 sleep infinity

@@ -1,6 +1,6 @@
 # Tagger_Local_Env
 
-bash push-img.sh v0.3
+bash push-img.sh v0.4
 
 
 Build the image
