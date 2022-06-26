@@ -1,3 +1,0 @@
-DROP DATABASE IF EXISTS tagger_db;
-CREATE DATABASE tagger_db;
-SET DATABASE = tagger_db;
