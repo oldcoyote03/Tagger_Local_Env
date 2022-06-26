@@ -21,7 +21,7 @@ sleep 2
 
 #docker exec -it db-init /bin/sh
 #docker exec flask-api python /tagger_api/run.py
-docker exec -d flask-api python /tagger_api/run.py
+docker exec flask-api python -u /tagger_api/run.py
 sleep 7
 echo "API deployed"
 
